@@ -1,19 +1,27 @@
 class RingBuffer:
     def __init__(self, capacity):
-        self.capacity = capacity
-        self.store = [None] * capacity
-        self.current = 0
+        #where it the iterating position is
+        self.current = 0 
+        #the array
+        self.store = [] 
+        #the max number of things in the array
+        self.capacity = capacity 
 
     def append(self, item):
-        self.store[self.current] = item
-        self.advance()
-
-    def advance(self):
-        if self.current == self.capacity - 1:
-            self.current = 0
+        #check if the length of the array is smaller than the capacity
+        if len(self.store) < self.capacity:
+        #if it is then add on next item
+            self.store.append(item)
+        #if it isn't then
         else:
-            self.current += 1
+            #get the oldest item
+            self.store[self.current] = item 
+        #add 1
+        self.current += 1 
+        #if the position is at capacity
+        if self.current == self.capacity: 
+            #then go back to the first one, zero index.
+            self.current = 0
 
-    def get(self):
-        buffer = [item for item in self.store if item is not None]
-        return buffer
+    def get(self): 
+        return self.store
